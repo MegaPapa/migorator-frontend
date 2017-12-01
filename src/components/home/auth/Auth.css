@@ -70,6 +70,34 @@ input[type=text], [type=password] {
     border-radius: 3px;
 }
 
+.locked_signin {
+    width: 50%;
+    background-color: red;
+    height: 20px;
+    margin-right: auto;
+    border: 2px solid black;
+    margin-right: 1%;
+    text-align: center;
+    color: white;
+    border-radius: 3px;
+    transition: 350ms ease-out;
+    cursor: no-drop;
+}
+
+.locked_signup {
+    height: 20px;
+    width: 50%;
+    margin-left: auto;
+    background-color: red;
+    border: 2px solid black;
+    margin-left: 1%;
+    text-align: center;
+    color: white;
+    border-radius: 3px;
+    transition: 350ms ease-out;
+    cursor: no-drop;
+}
+
 .sign_button:hover {
     color: black;
     background-color: white;
