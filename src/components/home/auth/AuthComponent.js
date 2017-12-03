@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Auth.css';
-import AuthContainer from '../../../containers/auth/AuthContainer';
+import './AuthComponent.css';
 
-class Auth extends Component {
+class AuthComponent extends Component {
     
     constructor(props) {
         super(props);
@@ -13,7 +12,8 @@ class Auth extends Component {
             formErrors: {email: '', password: ''},
             emailValid: false,
             passwordValid: false,
-            formValid: false
+            formValid: false,
+            responseWaiting : false
         }
     }
 
@@ -51,41 +51,16 @@ class Auth extends Component {
                                     this.state.passwordValid});
     }
 
-    signin = (e) => {
-        var body = `username=${encodeURIComponent(this.state.email)}&password=${encodeURIComponent(this.state.password)}&grant_type=password`
-        var request_instance = axios.create({
-            baseURL: 'http://localhost:8080/oauth/token',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(`migorator-frontend:secret`)}
-        });
-        request_instance.post("http://localhost:8080/oauth/token", body)
-        .then(function(response) {
-            console.log("response was succ");
-            console.log(response);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
-    }
-
-    signup = (e) => {
-        var user = {
-            email : this.state.email,
-            password : this.state.password
-        }
-        axios.post("http://localhost:8080/signup", user)
-        .then(function(response) {
-            if (response.status == 200) {
-                alert("Registration was succesful!");
-            }
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
-    }
-
     noop = (e) => {
         console.log("NOOP");
+    };
+
+    signUp() {
+        this.props.onSignUpClick(this.state.email, this.state.password);
+    }
+
+    signIn() {
+        this.props.onSignInClick(this.state.email, this.state.password);
     }
 
     render() {
@@ -109,15 +84,15 @@ class Auth extends Component {
                 </div>
                 <div className="button_wrapper">
                     <div 
-                        className={this.state.formValid ? 'sign_button' : 'locked_signin'}
-                        onClick={this.state.formValid ? this.signin : this.noop}
+                        className={this.state.formValid && !this.state.responseWaiting ? 'sign_button' : 'locked_signin'}
+                        onClick={this.state.formValid && !this.state.responseWaiting ? this.signIn.bind(this) : this.noop}
                     >
                 
                         Sign In
                     </div>
                     <div 
-                        className={this.state.formValid ? 'signup_button' : 'locked_signup'}
-                        onClick={this.state.formValid ? this.signup : this.noop}
+                        className={this.state.formValid && !this.state.responseWaiting ? 'signup_button' : 'locked_signup'}
+                        onClick={this.state.formValid && !this.state.responseWaiting ? this.signUp.bind(this) : this.noop}
                     >
                         Sign Up
                     </div>
@@ -128,4 +103,4 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+export default AuthComponent;

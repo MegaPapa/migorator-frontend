@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import Auth from '../../components/home/auth/Auth';
+import { connect } from 'react-redux';
+import AuthComponent from '../../components/home/auth/AuthComponent';
 
-class AuthContainer extends Component {
+const mapStateToProps = (state) => {
+    return state;
+};
 
-    signin() {
-        console.log("lelkek");
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSignInClick: (email, password) => {
+            dispatch({type: "SIGN_IN", email, password});
+        },
+        onSignUpClick: (email, password) => {
+            dispatch({type: "SIGN_UP", email, password});
+        }
     }
 }
 
-export default AuthContainer;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AuthComponent);

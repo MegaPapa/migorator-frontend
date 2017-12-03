@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Home.css'
-import Auth from './auth/Auth.js'
+import AuthContainer from "../../containers/auth/AuthContainer";
 
 class Home extends Component {
 
@@ -10,7 +10,7 @@ class Home extends Component {
                 <div className="auth_header">
                     <p>Sign In to Continue</p>
                 </div>
-                <Auth />
+                <AuthContainer />
             </div>
         );
     }
