@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './AuthComponent.css';
 
 class AuthComponent extends Component {
@@ -51,16 +50,16 @@ class AuthComponent extends Component {
                                     this.state.passwordValid});
     }
 
-    noop = (e) => {
-        console.log("NOOP");
-    };
-
     signUp() {
         this.props.onSignUpClick(this.state.email, this.state.password);
     }
 
     signIn() {
         this.props.onSignInClick(this.state.email, this.state.password);
+    }
+
+    noop() {
+        this.props.onNoopClick();
     }
 
     render() {
@@ -85,14 +84,14 @@ class AuthComponent extends Component {
                 <div className="button_wrapper">
                     <div 
                         className={this.state.formValid && !this.state.responseWaiting ? 'sign_button' : 'locked_signin'}
-                        onClick={this.state.formValid && !this.state.responseWaiting ? this.signIn.bind(this) : this.noop}
+                        onClick={this.state.formValid && !this.state.responseWaiting ? this.signIn.bind(this) : this.noop.bind(this)}
                     >
                 
                         Sign In
                     </div>
                     <div 
                         className={this.state.formValid && !this.state.responseWaiting ? 'signup_button' : 'locked_signup'}
-                        onClick={this.state.formValid && !this.state.responseWaiting ? this.signUp.bind(this) : this.noop}
+                        onClick={this.state.formValid && !this.state.responseWaiting ? this.signUp.bind(this) : this.noop.bind(this)}
                     >
                         Sign Up
                     </div>

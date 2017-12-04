@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_SERVER_ADDRESS, getLoginBody } from '../constants/ServerConf';
+import cookie from 'react-cookies';
 
 export function signInAction(email, password) {
     var body = getLoginBody(email, password); 
@@ -10,7 +11,12 @@ export function signInAction(email, password) {
     });
     request_instance.post(API_SERVER_ADDRESS.concat("oauth/token"), body)
     .then(function(response) {
-        console.log(response);
+        if (cookie.load("token") === undefined) {
+            cookie.remove("token");
+        }
+        cookie.save("token", response.data.access_token);
+        cookie.save("email", email); // OOOO TAK TOCHNO DELAT NE NUZHNO
+        //console.log(response.data.access_token);
     })
     .catch(function(error) {
         console.log(error);

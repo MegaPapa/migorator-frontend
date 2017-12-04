@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         onSignUpClick: (email, password) => {
             dispatch({type: "SIGN_UP", email, password});
+        },
+        onNoopClick: () => {
+            dispatch({type: "NOOP"});
         }
     }
 }
